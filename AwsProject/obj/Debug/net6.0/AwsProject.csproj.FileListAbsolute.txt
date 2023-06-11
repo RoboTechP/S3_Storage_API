@@ -33,3 +33,4 @@ C:\Users\User\source\repos\AwsProject\AwsProject\obj\Debug\net6.0\refint\AwsProj
 C:\Users\User\source\repos\AwsProject\AwsProject\obj\Debug\net6.0\AwsProject.pdb
 C:\Users\User\source\repos\AwsProject\AwsProject\obj\Debug\net6.0\AwsProject.genruntimeconfig.cache
 C:\Users\User\source\repos\AwsProject\AwsProject\obj\Debug\net6.0\ref\AwsProject.dll
+C:\Users\User\source\repos\AwsProject\AwsProject\bin\Debug\net6.0\web.config

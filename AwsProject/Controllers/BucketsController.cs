@@ -12,9 +12,14 @@ namespace AwsProject.Controllers
         public BucketsController(IAmazonS3 s3Client)
         {
             _s3Client = s3Client;
+
+           
         }
-      
-        [HttpPost("create")]
+
+     
+
+
+     [HttpPost("create")]
         public async Task<IActionResult> CreateBucketAsync(string bucketName)
         {
             var bucketExists = await _s3Client.DoesS3BucketExistAsync(bucketName);
