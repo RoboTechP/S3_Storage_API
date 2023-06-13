@@ -54,6 +54,52 @@ namespace AwsProject.Controllers
             Console.WriteLine("" + args);
         }
 
+        [HttpGet("download-file")]
+        public async Task<IActionResult> DownloadFile(string bucketName, string? prefix)
+        {
+            var bucketExists = await _s3Client.DoesS3BucketExistAsync(bucketName);
+            if (!bucketExists)
+                return NotFound($"Bucket {bucketName} does not exist.");
+
+            var request = new ListObjectsV2Request()
+            {
+                BucketName = bucketName,
+                Prefix = prefix
+            };
+
+            var result = await _s3Client.ListObjectsV2Async(request);
+            var s3Objects = result.S3Objects;
+
+            // Choose the first object for simplicity
+            var s3Object = s3Objects.FirstOrDefault();
+            if (s3Object == null)
+                return NotFound("No objects found in the specified bucket and prefix.");
+
+            var downloadRequest = new TransferUtilityDownloadRequest
+            {
+                BucketName = bucketName,
+                Key = s3Object.Key,
+                FilePath = "C:\\Users\\User\\Desktop"
+            };
+
+            downloadRequest.WriteObjectProgressEvent += OnDownloadProgress;
+
+            using (var transferUtility = new TransferUtility(_s3Client))
+            {
+                await transferUtility.DownloadAsync(downloadRequest);
+            }
+
+            return Ok("File downloaded successfully.");
+        }
+
+        private void OnDownloadProgress(object sender, WriteObjectProgressArgs e)
+        {
+            // You can handle the download progress here if needed
+            Console.WriteLine($"Downloaded {e.TransferredBytes}/{e.TotalBytes} bytes");
+        }
+
+
+
 
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllFilesAsync(string bucketName, string? prefix)
