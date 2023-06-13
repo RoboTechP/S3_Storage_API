@@ -79,7 +79,7 @@ namespace AwsProject.Controllers
             {
                 BucketName = bucketName,
                 Key = s3Object.Key,
-                FilePath = "C:\\Users\\User\\Desktop"
+                FilePath = "C:\\Users\\User\\Desktop\\" + prefix
             };
 
             downloadRequest.WriteObjectProgressEvent += OnDownloadProgress;
@@ -95,7 +95,10 @@ namespace AwsProject.Controllers
         private void OnDownloadProgress(object sender, WriteObjectProgressArgs e)
         {
             // You can handle the download progress here if needed
-            Console.WriteLine($"Downloaded {e.TransferredBytes}/{e.TotalBytes} bytes");
+            long tranfered = e.TransferredBytes / 1000000;
+            long total = e.TotalBytes / 1000000;
+
+            Console.WriteLine($"Downloaded {tranfered}/{total} MB");
         }
 
 
