@@ -42,17 +42,14 @@ namespace AwsProject.Controllers
                 };
 
               
-                uploadRequest.UploadProgressEvent += displayProgress;
+            
 
                 await transferUtility.UploadAsync(uploadRequest);
             }
 
             return Ok($"File {prefix}/{file.FileName} uploaded to S3 via multipart successfully!");
         }
-        private void displayProgress(object sender, UploadProgressArgs args)
-        {
-            Console.WriteLine("" + args);
-        }
+      
 
         [HttpGet("download-file")]
         public async Task<IActionResult> DownloadFile(string bucketName, string? prefix)
@@ -101,9 +98,6 @@ namespace AwsProject.Controllers
             Console.WriteLine($"Downloaded {tranfered}/{total} MB");
         }
 
-
-
-
         [HttpGet("get-all")]
         public async Task<IActionResult> GetAllFilesAsync(string bucketName, string? prefix)
         {
@@ -150,11 +144,6 @@ namespace AwsProject.Controllers
             return NoContent();
         }
 
-
     }
-
-
-
-   
 }
 

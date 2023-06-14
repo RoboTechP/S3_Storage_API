@@ -16,9 +16,6 @@ namespace AwsProject.Controllers
            
         }
 
-     
-
-
      [HttpPost("create")]
         public async Task<IActionResult> CreateBucketAsync(string bucketName)
         {
